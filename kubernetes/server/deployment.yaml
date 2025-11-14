@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: markitdown
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: kube-training-api:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - configMapRef:
+                name: api-config
+          volumeMounts:
+            - mountPath: /data
+              name: shared-data
+      volumes:
+        - name: shared-data
+          persistentVolumeClaim:
+            claimName: markitdown-pvc

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+  namespace: markitdown
+data:
+  UPLOAD_DIR: "/data/uploads"
+  TASK_STORE_FILE: "/data/tasks.json"
